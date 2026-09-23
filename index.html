@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DENZZ GIF Banner PRO</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#07080c;color:#f6f7fb;font:14px system-ui,-apple-system,Segoe UI,sans-serif}button,input,select{font:inherit}
+.app{min-height:100vh;display:grid;grid-template-columns:245px 1fr 285px;grid-template-rows:58px 1fr 92px}.top{grid-column:1/-1;border-bottom:1px solid #252936;background:#0c0e14;display:flex;align-items:center;padding:0 14px;gap:12px;position:relative;z-index:5}.logo{font-weight:850}.logo i{color:#a78bfa;font-style:normal}.actions{margin-left:auto;display:flex;gap:7px}.btn{background:#191c25;border:1px solid #303543;color:#fff;border-radius:9px;padding:8px 12px}.primary{background:linear-gradient(135deg,#7c3aed,#a855f7);border:0}
+.side{background:#0c0e14;border-right:1px solid #252936;padding:12px;overflow:auto}.right{border-left:1px solid #252936;border-right:0}.title{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#858da0;margin:10px 4px 7px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}.tool,.tpl{border:1px solid #292e3a;background:#13161e;color:#e9ebf2;border-radius:9px;padding:10px}.tpl{text-align:left}.tpl b{display:block}.tpl small{color:#7f8798}.field{margin-bottom:10px}.field label{display:block;color:#aeb5c3;font-size:11px;margin-bottom:5px}.field input,.field select{width:100%;padding:8px;border-radius:8px;border:1px solid #2b303c;background:#0a0c11;color:#fff}.color{height:37px;padding:3px!important}.stagearea{display:flex;align-items:center;justify-content:center;padding:25px;min-width:0}.stage{width:min(900px,100%);aspect-ratio:16/9;position:relative;background:#12151d;border:1px solid #303544;border-radius:14px;overflow:hidden;box-shadow:0 25px 80px #000b}.stage canvas{width:100%;height:100%}.empty{position:absolute;inset:0;display:grid;place-items:center;color:#858da0;text-align:center;pointer-events:none}.timeline{grid-column:2/-1;border-top:1px solid #252936;background:#0c0e14;padding:10px 15px}.track{height:10px;background:#1b1f29;border-radius:99px;overflow:hidden;margin:8px 0}.playhead{height:100%;background:#8b5cf6;width:0}.tlrow{display:flex;align-items:center;gap:10px;color:#8f97a8;font-size:11px}.range{flex:1}.layers{display:flex;flex-direction:column;gap:6px}.layer{padding:9px;border:1px solid #292e39;background:#12151c;border-radius:8px;display:flex;gap:7px;align-items:center}.layer.sel{border-color:#8b5cf6}.layer span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.del{margin-left:auto;color:#fca5a5;background:none}
+.fx{display:grid;grid-template-columns:1fr 1fr;gap:6px}.fx button{padding:8px;border:1px solid #292e39;background:#12151c;color:#ddd;border-radius:8px}.note{color:#737c8e;font-size:11px;line-height:1.5}
+@media(max-width:850px){.app{grid-template-columns:1fr;grid-template-rows:56px auto 150px}.side{display:none}.stagearea{padding:12px}.timeline{grid-column:1}.top{height:56px}.actions .hide{display:none}.stage{border-radius:9px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top"><div class="logo">DENZZ <i>GIF Banner PRO</i></div><div class="actions"><button class="btn hide" id="new">New</button><button class="btn" id="preview">▶ Preview</button><button class="btn primary" id="export">Export GIF</button></div></header>
+
+<aside class="side">
+<div class="title">Tools</div><div class="grid">
+<button class="tool" id="addText">＋ Text</button><label class="tool" style="text-align:center">＋ Image<input id="img" type="file" accept="image/*" hidden></label>
+</div>
+<div class="title">Templates</div><div class="layers">
+<button class="tpl" data-t="hnc"><b>🌙 HNC NIGHT</b><small>Black + gold club</small></button>
+<button class="tpl" data-t="denzz"><b>⚡ DENZZSTUDIO</b><small>Purple neon</small></button>
+<button class="tpl" data-t="gaming"><b>🎮 GAMING</b><small>Cyber neon</small></button>
+<button class="tpl" data-t="luxury"><b>✦ LUXURY</b><small>Gold cinematic</small></button>
+</div>
+<div class="title">Effects</div><div class="fx">
+<button data-fx="glow">Glow</button><button data-fx="pulse">Pulse</button><button data-fx="scan">Scanline</button><button data-fx="particles">Particles</button><button data-fx="vignette">Vignette</button><button data-fx="none">Clear FX</button>
+</div>
+</aside>
+
+<main class="stagearea"><div class="stage"><canvas id="c" width="1280" height="720"></canvas><div class="empty" id="empty">Pilih template atau tambahkan teks<br><small>Semua preview berjalan langsung di browser</small></div></div></main>
+
+<aside class="side right">
+<div class="title">Canvas</div>
+<div class="field"><label>Format</label><select id="ratio"><option value="16:9">16:9 • 1280×720</option><option value="3:1">3:1 • 1200×400</option></select></div>
+<div class="field"><label>Background</label><input class="color" id="bg" type="color" value="#11131b"></div>
+<div class="field"><label>Upload Background</label><input id="bgimg" type="file" accept="image/*"></div>
+<div class="title">Layer</div><div class="layers" id="layers"></div>
+<div class="title">Selected</div>
+<div class="field"><label>Text</label><input id="txt" placeholder="Pilih layer teks"></div>
+<div class="field"><label>Font</label><select id="font"><option>Arial</option><option>Impact</option><option>Georgia</option><option>Trebuchet MS</option><option>Courier New</option></select></div>
+<div class="field"><label>Size</label><input id="size" type="range" min="20" max="240" value="80"></div>
+<div class="field"><label>Text Color</label><input class="color" id="color" type="color" value="#ffffff"></div>
+<p class="note">Tip: pada HP, gunakan preset terlebih dahulu. Layer teks dapat diedit dari panel ini.</p>
+</aside>
+
+<div class="timeline"><div class="tlrow"><span id="clock">0.0s</span><input class="range" id="seek" type="range" min="0" max="5" step=".02" value="0"><span>5.0s</span></div><div class="track"><div class="playhead" id="play"></div></div></div>
+</div>
+
+<script>
+const c=document.getElementById('c'),x=c.getContext('2d');let state={bg:'#11131b',image:null,fx:new Set(),layers:[],sel:-1,t:0,playing:true};
+function obj(text='YOUR TEXT'){return{text,x:.5,y:.55,size:80,font:'Arial',color:'#fff',speed:1}}
+function imgFit(im,w,h){let r=Math.max(w/im.width,h/im.height);return[ (w-im.width*r)/2,(h-im.height*r)/2,im.width*r,im.height*r ]}
+function bgDraw(w,h,t){
+let g=x.createLinearGradient(0,0,w,h);g.addColorStop(0,state.bg);g.addColorStop(1,'#080a10');x.fillStyle=g;x.fillRect(0,0,w,h);
+if(state.image){let p=imgFit(state.image,w,h);x.globalAlpha=.72;x.drawImage(state.image,...p);x.globalAlpha=1}
+}
+function render(){
+let w=c.width,h=c.height,t=state.t;bgDraw(w,h,t);
+if(state.template==='hnc'||state.template==='luxury'){x.save();x.strokeStyle='#e8bd5b';x.globalAlpha=.15;for(let i=0;i<7;i++){x.beginPath();x.arc(w/2,h/2,100+i*55+t*15,0,7);x.stroke()}x.restore()}
+if(state.template==='gaming'||state.template==='denzz'){x.save();x.globalAlpha=.15;x.fillStyle='#8b5cf6';x.beginPath();x.arc(w*.2,h*.35,230,0,7);x.fill();x.restore()}
+if(state.fx.has('particles')){x.save();for(let i=0;i<55;i++){let px=(i*97+t*35)%w,py=(i*53+(t*20*(i%3+1)))%h;x.globalAlpha=.35;x.fillStyle='#fff';x.fillRect(px,py,2,2)}x.restore()}
+for(let i=0;i<state.layers.length;i++){let q=state.layers[i],pulse=(Math.sin(t*3*q.speed)+1)/2,xx=q.x*w,yy=q.y*h,a=1,sc=1;
+if(state.fx.has('pulse'))sc=.96+.08*pulse;if(state.fx.has('glow')){}
+x.save();x.translate(xx,yy);x.scale(sc,sc);x.textAlign='center';x.textBaseline='middle';x.font=`900 ${q.size}px ${q.font}`;x.fillStyle=q.color;
+if(state.fx.has('glow')){x.shadowBlur=20+25*pulse;x.shadowColor=q.color}x.globalAlpha=a;x.fillText(q.text,0,0);x.restore()}
+if(state.fx.has('scan')){x.save();x.globalAlpha=.09;x.fillStyle='#fff';for(let yy=0;yy<h;yy+=5)x.fillRect(0,yy,w,1);x.restore()}
+if(state.fx.has('vignette')){let v=x.createRadialGradient(w/2,h/2,Math.min(w,h)*.15,w/2,h/2,Math.max(w,h)*.7);v.addColorStop(0,'transparent');v.addColorStop(1,'#000b');x.fillStyle=v;x.fillRect(0,0,w,h)}
+updateUI();requestAnimationFrame(render)}
+function updateUI(){document.getElementById('clock').textContent=state.t.toFixed(1)+'s';document.getElementById('seek').value=state.t;document.getElementById('play').style.width=(state.t/5*100)+'%';document.getElementById('layers').innerHTML=state.layers.map((q,i)=>`<div class="layer ${i===state.sel?'sel':''}" data-i="${i}"><span>✦ ${q.text}</span><button class="del" data-del="${i}">×</button></div>`).join('');document.querySelectorAll('.layer').forEach(e=>e.onclick=()=>{state.sel=+e.dataset.i;sync()});document.querySelectorAll('[data-del]').forEach(e=>e.onclick=a=>{a.stopPropagation();state.layers.splice(+e.dataset.del,1);state.sel=-1;sync()})}
+function sync(){let q=state.layers[state.sel];document.getElementById('txt').value=q?.text||'';if(q){document.getElementById('font').value=q.font;document.getElementById('size').value=q.size;document.getElementById('color').value=q.color}}
+document.getElementById('addText').onclick=()=>{state.layers.push(obj());state.sel=state.layers.length-1;document.getElementById('empty').style.display='none';sync()};
+document.getElementById('txt').oninput=e=>{if(state.layers[state.sel])state.layers[state.sel].text=e.target.value};
+document.getElementById('font').onchange=e=>{if(state.layers[state.sel])state.layers[state.sel].font=e.target.value};
+document.getElementById('size').oninput=e=>{if(state.layers[state.sel])state.layers[state.sel].size=+e.target.value};
+document.getElementById('color').oninput=e=>{if(state.layers[state.sel])state.layers[state.sel].color=e.target.value};
+document.getElementById('bg').oninput=e=>state.bg=e.target.value;
+document.getElementById('seek').oninput=e=>state.t=+e.target.value;
+document.getElementById('bgimg').onchange=e=>{let r=new FileReader();r.onload=()=>{let im=new Image();im.onload=()=>state.image=im;im.src=r.result};r.readAsDataURL(e.target.files[0])};
+document.getElementById('img').onchange=e=>document.getElementById('bgimg').dispatchEvent(new Event('change'));
+document.querySelectorAll('[data-fx]').forEach(b=>b.onclick=()=>{let f=b.dataset.fx;if(f==='none')state.fx.clear();else state.fx.has(f)?state.fx.delete(f):state.fx.add(f)});
+document.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{let t=b.dataset.t;state.template=t;state.layers=[];let q=obj({hnc:'HAPPY NIGHT CLUB',denzz:'DENZZSTUDIO',gaming:'GAMING ZONE',luxury:'VIP • NIGHT'}[t]);q.color=t==='hnc'||t==='luxury'?'#f3ca68':t==='denzz'?'#c4b5fd':'#fff';state.layers=[q];state.sel=0;document.getElementById('empty').style.display='none';sync()});
+document.getElementById('ratio').onchange=e=>{if(e.target.value==='3:1'){c.width=1200;c.height=400}else{c.width=1280;c.height=720}};
+document.getElementById('preview').onclick=()=>{state.playing=!state.playing};
+document.getElementById('new').onclick=()=>{state.layers=[];state.fx.clear();state.template=null;state.sel=-1};
+document.getElementById('export').onclick=async()=>{
+let status=document.getElementById('clock');status.textContent='Exporting…';
+if(!window.GIF){await new Promise((res,rej)=>{let s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.js';s.onload=res;s.onerror=rej;document.head.appendChild(s)})}
+let gif=new GIF({workers:2,quality:8,width:c.width,height:c.height,workerScript:'https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.worker.js'});
+for(let i=0;i<50;i++){state.t=i*.1;renderOnce();gif.addFrame(c,{copy:true,delay:100})}
+gif.on('finished',b=>{let a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='discord-gif-banner.gif';a.click();status.textContent='Selesai'});
+gif.render();
+};
+function renderOnce(){let old=state.playing;state.playing=false;let w=c.width,h=c.height,t=state.t;bgDraw(w,h);/* export uses normal frame */ for(let i=0;i<state.layers.length;i++){let q=state.layers[i];x.save();x.translate(q.x*w,q.y*h);x.textAlign='center';x.textBaseline='middle';x.font=`900 ${q.size}px ${q.font}`;x.fillStyle=q.color;x.shadowBlur=state.fx.has('glow')?25:0;x.shadowColor=q.color;x.fillText(q.text,0,0);x.restore()}state.playing=old}
+setInterval(()=>{if(state.playing)state.t=(state.t+.02)%5},20);render();
+</script>
+</body></html>
